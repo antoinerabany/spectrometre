@@ -1,19 +1,21 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
+import serial
 
 class Capteur:
     def __init__(self):
         self.baurate = 115200
         self.meusures = 2088
-        self.resultats=[]
         self.tini=range(self.meusures)
         self.t=range(2048)
+        self.calibre=0
 
     def start(self):
-        ser = serial.Serial('/dev/ttyACM1', self.baudrate)
+        ser = serial.Serial('/dev/ttyACM0', self.baurate)
         if(ser.readline()==b'A\r\n'):
             ser.write(b'1')
             print('Démarage des meusures')
+            self.resultats=[]
             for i in self.tini:
                 self.resultats.append(int(ser.readline().decode().rstrip('\r\n')))
             print('meusures terminées')
@@ -27,6 +29,9 @@ class Capteur:
         self.resultats=[x - mini for x in self.resultats]
         maxi = max(self.resultats)
         self.resultats=[x/maxi for x in self.resultats]
+        for i,r in enumerate(self.resultats):
+            if(r<0.2):
+                self.resultats[i]=0
 
     def calibrer(self):
         pass
