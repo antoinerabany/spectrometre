@@ -14,11 +14,11 @@ class Capteur:
         ser = serial.Serial('/dev/ttyACM0', self.baurate)
         if(ser.readline()==b'A\r\n'):
             ser.write(b'1')
-            print('Démarage des meusures')
+            print('Démarrage des mesures')
             self.resultats=[]
             for i in self.tini:
                 self.resultats.append(int(ser.readline().decode().rstrip('\r\n')))
-            print('meusures terminées')
+            print('mesures terminées')
         #On enlève les meusures fausses
         del self.resultats[0:32]
         del self.resultats[len(self.resultats)-8:len(self.resultats)]
