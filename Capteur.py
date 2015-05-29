@@ -7,6 +7,7 @@ class Capteur:
         self.baurate = 115200
         self.meusures = 2088
         self.tini=range(self.meusures)
+        self.resultats=[]
         self.t=range(2048)
         self.calibre=0
 
