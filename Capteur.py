@@ -19,9 +19,8 @@ class Capteur:
             self.resultats=[]
             for i in self.tini:
                 meusure = ser.readline().decode().rstrip('\r\n')
-                if(meusure!='A'){
+                if(meusure!='A'):
                     self.resultats.append(int(meusure))
-                }
             print('mesures terminées')
         #On enlève les meusures fausses
         del self.resultats[0:32]
